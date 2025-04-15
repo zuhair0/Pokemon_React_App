@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import "./index.css"
+import { PokemonCard } from "./PokemonCard"
 export const Pokemon =()=>{
     const [pokemon, setPokemon]=useState([])
     const [loading, setLoading]=useState(true)
@@ -34,6 +35,16 @@ export const Pokemon =()=>{
     useEffect(()=>{
         fetchPokemon()
     },[])
+    if(loading){
+        return <div>
+            <h1>Loading...</h1>
+        </div>
+    }
+    if(error){
+        return <div>
+            <h1>Error: {error.message}</h1>
+        </div>
+    }
     return <>
         <section className="container">
             <header>
@@ -43,7 +54,7 @@ export const Pokemon =()=>{
                 <ul className="cards">
                     {
                         pokemon.map((curPokemon)=>{
-                            return <li key={curPokemon.id}>{curPokemon.name}</li>
+                            return <PokemonCard key={curPokemon.id} curPokemon={curPokemon}/>
                         })
                     }
                 </ul>
